@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cms_sarkande.CmsTranslationModal">
+        <Dialog size="'xl'" title="'Traduire la page - ' + props.pageName" contentClass="'cms_translation_modal_content'">
+            <div class="cms_translation_modal">
+                <!-- Language selector -->
+                <div class="mb-3">
+                    <label class="form-label">Langue :</label>
+                    <select class="form-select" t-on-change="onLanguageChange" t-model="state.selectedLang">
+                        <t t-foreach="state.languages" t-as="lang" t-key="lang.code">
+                            <option t-att-value="lang.code" t-esc="lang.name"/>
+                        </t>
+                    </select>
+                </div>
+
+                <!-- Main content: translations + preview -->
+                <div class="row" style="height: calc(80vh - 150px);">
+                    <!-- Translations list (left side) -->
+                    <div class="col-md-7" style="height: 100%; overflow-y: auto;">
+                        <h5>Traductions</h5>
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15%;">Bloc</th>
+                                    <th style="width: 15%;">Champ</th>
+                                    <th style="width: 35%;">Source (English)</th>
+                                    <th style="width: 35%;">Traduction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.translations" t-as="translation" t-key="translation_index">
+                                    <tr t-att-class="{'table-active': state.highlightedIndex === translation_index}"
+                                        t-on-mouseenter="() => this.onRowHover(translation_index)"
+                                        t-on-mouseleave="onRowLeave">
+                                        <td t-esc="translation.blockName"/>
+                                        <td t-esc="translation.fieldLabel"/>
+                                        <td>
+                                            <div class="source-preview" t-if="translation.isHtml" t-out="translation.sourceValue"/>
+                                            <div class="source-preview" t-else="" t-esc="translation.sourceValue"/>
+                                        </td>
+                                        <td>
+                                            <div class="translation-field">
+                                                <HtmlField t-props="getFieldProps(translation, translation_index)"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Preview (right side) -->
+                    <div class="col-md-5" style="height: 100%;">
+                        <h5>Aperçu</h5>
+                        <iframe t-ref="preview" class="preview-iframe" style="width: 100%; height: calc(100% - 40px); border: 1px solid #ddd; border-radius: 4px; background: white;">
+                            <t t-set-slot="default">
+                                <t t-out="state.previewHtml"/>
+                            </t>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer buttons -->
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onSave">Fermer</button>
+                <button class="btn btn-secondary" t-on-click="props.close">Annuler</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

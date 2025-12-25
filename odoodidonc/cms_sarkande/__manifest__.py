@@ -24,6 +24,11 @@
     ],
     "assets": {
         "web.assets_backend": [
+            "cms_sarkande/static/src/js/cms_preview_modal.js",
+            "cms_sarkande/static/src/xml/cms_preview_modal.xml",
+            "cms_sarkande/static/src/js/cms_preview_button.js",
+            "cms_sarkande/static/src/xml/cms_preview_button.xml",
+            "cms_sarkande/static/src/css/cms_translation_preview.css",
         ],
     },
     "installable": True,

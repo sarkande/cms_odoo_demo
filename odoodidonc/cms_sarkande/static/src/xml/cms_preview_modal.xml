@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cms_sarkande.CmsPreviewModal">
+        <Dialog size="'xl'" title="'Aperçu de la page'" contentClass="'cms_preview_modal_content'">
+            <iframe t-ref="iframe" class="preview-modal-iframe" style="width: 100%; height: 70vh; border: 1px solid #ddd; border-radius: 4px; background: white;"/>
+
+            <t t-set-slot="footer">
+                <button class="btn btn-secondary" t-on-click="props.close">Fermer</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
