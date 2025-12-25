@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CMS Block Title Form View -->
+    <record id="view_cms_block_title_form" model="ir.ui.view">
+        <field name="name">cms.block.title.form</field>
+        <field name="model">cms.block.title</field>
+        <field name="arch" type="xml">
+            <form string="Title Component">
+                <header>
+                    <button name="auto_translate_field"
+                            string="Traduire automatiquement (IA)"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-language"
+                            context="{'field_name': 'title'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="title" placeholder="Enter title..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CMS Block Text Form View -->
+    <record id="view_cms_block_text_form" model="ir.ui.view">
+        <field name="name">cms.block.text.form</field>
+        <field name="model">cms.block.text</field>
+        <field name="arch" type="xml">
+            <form string="Text Component">
+                <header>
+                    <button name="auto_translate_field"
+                            string="Traduire automatiquement (IA)"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-language"
+                            context="{'field_name': 'content'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="content" placeholder="Enter text content..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CMS Block HTML Form View -->
+    <record id="view_cms_block_html_form" model="ir.ui.view">
+        <field name="name">cms.block.html.form</field>
+        <field name="model">cms.block.html</field>
+        <field name="arch" type="xml">
+            <form string="HTML Component">
+                <header>
+                    <button name="auto_translate_field"
+                            string="Traduire automatiquement (IA)"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-language"
+                            context="{'field_name': 'content'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="content" widget="html" placeholder="Enter HTML content..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CMS Block Image Form View -->
+    <record id="view_cms_block_image_form" model="ir.ui.view">
+        <field name="name">cms.block.image.form</field>
+        <field name="model">cms.block.image</field>
+        <field name="arch" type="xml">
+            <form string="Image Component">
+                <header>
+                    <button name="auto_translate_field"
+                            string="Traduire Alt Text (IA)"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-language"
+                            context="{'field_name': 'alt'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="url"/>
+                        <field name="alt" placeholder="Enter alt text..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

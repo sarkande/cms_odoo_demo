@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_cms_block_form" model="ir.ui.view">
+        <field name="name">cms.block.form</field>
+        <field name="model">cms.block</field>
+        <field name="arch" type="xml">
+            <form string="CMS Block">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="page_id"/>
+                            <field name="block_type"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Content" invisible="block_type not in ['html', 'text']">
+                            <group>
+                                <field name="html_content" invisible="block_type != 'html'" widget="html"/>
+                                <field name="text_content" invisible="block_type != 'text'"/>
+                            </group>
+                        </page>
+
+                        <page string="Heading" invisible="block_type != 'heading'">
+                            <group>
+                                <field name="heading_text"/>
+                                <field name="heading_level"/>
+                            </group>
+                        </page>
+
+                        <page string="Image" invisible="block_type != 'image'">
+                            <group>
+                                <field name="image_url"/>
+                                <field name="image_alt"/>
+                            </group>
+                        </page>
+
+                        <page string="Hero Section" invisible="block_type != 'hero'">
+                            <group>
+                                <group>
+                                    <field name="hero_title"/>
+                                    <field name="hero_subtitle"/>
+                                </group>
+                                <group>
+                                    <field name="hero_button_text"/>
+                                    <field name="hero_button_url"/>
+                                    <field name="hero_background_image"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Dynamic Content" invisible="block_type not in ['user_list']">
+                            <group>
+                                <field name="limit"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_cms_block" model="ir.actions.act_window">
+        <field name="name">CMS Blocks</field>
+        <field name="res_model">cms.block</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_cms_blocks" name="Blocks" parent="menu_cms_root" action="action_cms_block" sequence="20"/>
+</odoo>

@@ -1,0 +1,88 @@
+services:
+    db:
+        image: postgres:15
+        container_name: CMS_ODOO_NEXT_db
+        ports:
+            - "5586:5432"
+        environment:
+            - POSTGRES_USER=odoo
+            - POSTGRES_PASSWORD=odoo
+            - POSTGRES_DB=postgres
+        volumes:
+            - CMS_ODOO_NEXT-odoo-db-data:/var/lib/postgresql/data
+
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: CMS_ODOO_NEXT_odoo
+        depends_on:
+            - db
+        ports:
+            - "8219:8069"
+        volumes:
+            - ./data:/var/lib/odoo
+            - ./config:/etc/odoo
+            - ./odoodidonc:/mnt/extra-addons
+            - /Users/sarkande/enterprise19.0:/mnt/enterprise
+        command: >
+            /usr/bin/odoo --db_host=db --db_user=odoo --db_password=odoo --addons-path=/mnt/extra-addons,/mnt/enterprise --dev=all --smtp fakemail.pure-illusion.com --smtp-port 1025
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            - ODOO_SERVER=odoo-bin
+    jupyter:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: CMS_ODOO_NEXT_jupyter
+        depends_on:
+            - db
+        ports:
+            - "8219:8069"
+            - "8959:8888"
+        volumes:
+            - ./data:/var/lib/odoo
+            - ./config:/etc/odoo
+            - ./odoodidonc:/mnt/extra-addons
+            - /Users/sarkande/enterprise19.0:/mnt/enterprise
+            - ./odoo_shell_jupyter.py:/home/odoo/odoo_shell_jupyter.py
+        command: >
+            bash -c "
+            jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.token='' --NotebookApp.password='' &
+            /usr/bin/odoo --db_host=db --db_user=odoo --db_password=odoo
+                            --addons-path=/mnt/extra-addons,/mnt/enterprise
+                            --dev=all --smtp fakemail.pure-illusion.com --smtp-port 1025
+            "
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            - ODOO_SERVER=odoo-bin
+
+    debug:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: CMS_ODOO_NEXT_debug
+        depends_on:
+            - db
+        ports:
+            - "8219:8069"
+            - "5781:5678"
+        volumes:
+            - ./data:/var/lib/odoo
+            - ./config:/etc/odoo
+            - ./odoodidonc:/mnt/extra-addons
+            - /Users/sarkande/enterprise19.0:/mnt/enterprise
+        command: >
+            debugpy --listen 0.0.0.0:5678 /usr/bin/odoo --db_host=db --db_user=odoo --db_password=odoo --addons-path=/mnt/extra-addons,/mnt/enterprise --dev=all --smtp fakemail.pure-illusion.com --smtp-port 1025
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            - ODOO_SERVER=odoo-bin
+            - WDB_NO_BROWSER_AUTO_OPEN=True
+            - WDB_SOCKET_SERVER=wdb
+            - WDB_WEB_PORT=1984
+            - WDB_WEB_SERVER=localhost
+volumes:
+  CMS_ODOO_NEXT-odoo-db-data:

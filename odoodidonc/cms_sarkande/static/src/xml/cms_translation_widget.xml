@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cms_sarkande.CmsTranslationWidget" owl="1">
+        <div class="o_cms_translation_widget">
+            <div class="o_cms_translation_header">
+                <button type="button"
+                        class="btn btn-primary"
+                        t-on-click="translateAll"
+                        t-att-disabled="state.loading">
+                    <i class="fa fa-language me-1"/>
+                    <t t-if="!state.loading">Traduire automatiquement (IA)</t>
+                    <t t-else="">Traduction en cours...</t>
+                </button>
+            </div>
+
+            <div class="o_cms_translation_content mt-3">
+                <t t-foreach="state.languages" t-as="lang" t-key="lang.code">
+                    <div class="o_cms_translation_item mb-3">
+                        <label class="o_form_label">
+                            <t t-esc="lang.name"/>
+                        </label>
+                        <div class="o_field_widget">
+                            <t t-if="props.type === 'html'">
+                                <textarea
+                                    class="o_field_text form-control"
+                                    rows="5"
+                                    t-att-value="state.translations[lang.code] || ''"
+                                    t-on-change="(ev) => this.updateTranslation(lang.code, ev.target.value)"/>
+                            </t>
+                            <t t-else="">
+                                <input
+                                    type="text"
+                                    class="o_field_char form-control"
+                                    t-att-value="state.translations[lang.code] || ''"
+                                    t-on-change="(ev) => this.updateTranslation(lang.code, ev.target.value)"/>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

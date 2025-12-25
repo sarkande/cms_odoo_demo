@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../enterprise19.0"
+		},
+		{
+			"path": "../../../odoo19"
+		}
+	],
+	"settings": {
+		"xml.symbols.enabled": false
+	}
+}
