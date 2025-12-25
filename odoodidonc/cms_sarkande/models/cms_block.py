@@ -98,18 +98,6 @@ class CmsBlock(models.Model):
                     vals['hero_button_text_id'] = self.env['cms.block.title'].create({}).id
         return super().create(vals_list)
 
-    def action_open_translate_wizard(self):
-        """Ouvre le wizard de traduction pour ce bloc"""
-        self.ensure_one()
-        return {
-            'name': 'Traduire le bloc',
-            'type': 'ir.actions.act_window',
-            'res_model': 'cms.block.translate.wizard',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {'default_block_id': self.id},
-        }
-
     def get_block_data(self, lang='en_US'):
         """Return block data formatted for API consumption with translations"""
         self.ensure_one()

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates xml:space="preserve">
-    <t t-name="cms_sarkande.CmsSmartContentField">
-        <t t-component="FieldComponent" t-props="props"/>
-    </t>
-</templates>
